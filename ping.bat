@@ -1,8 +1,9 @@
 @ECHO OFF
 
 SET hosts=C:\Windows\System32\drivers\etc\hosts
-SET filtro=ejiedes.net ejiedes.eus
+SET filtro=dominio1.com dominio2.com
 SET listar=NO
+SET orden=NO
 SET timeout=5
 
 SETLOCAL EnableDelayedExpansion
@@ -38,8 +39,19 @@ IF /I "%listar%" EQU "SI" (
 )
 
 REM Realiza el ping sin mostrar los resultados del programa.
+SET /A num = -1
 :ping
-SET /A num=%random% %% !total!
+
+REM Dependiendo de la opcion seleccionada recupera un servidor aleatorio o en orden.
+IF /I "%orden%" EQU "SI" (
+	SET /A num += 1
+
+	IF !num! GEQ !total! (
+		SET /A num = 0
+	)
+) ELSE (
+	SET /A num = %random% %% !total!
+)
 
 ECHO | set /p="Haciendo PING a !servidores[%num%]!... "
 @%SystemRoot%\system32\ping.exe !servidores[%num%]! -n 1 > nul

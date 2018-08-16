@@ -21,5 +21,7 @@ SET filtro=dominio1.com dominio2.com dominio3.com # Filtros a aplicar en la bús
 
 SET listar=SI # Mostrar el listado de máquinas encontradas en el fichero antes de iniciar el ping.
 
+SET orden=NO # Evita la aleatoriedad y realiza el ping de uno en uno a los servidores recuperados.
+
 SET timeout=5 # Lapso de tiempo de espera en segundos entre un PING y otro.
 ```
