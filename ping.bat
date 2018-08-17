@@ -12,10 +12,17 @@ ECHO Leyendo el fichero HOSTS...
 
 REM Lista todos los servidores del archivo de HOSTS que contengan las cadenas a filtrar.
 SET total=0
-FOR /F "tokens=2" %%G IN (%hosts%) DO (
-	Echo.%%G | findstr "%filtro%" > nul && (
-		SET "servidores[!total!]=%%G"
-		SET /A total += 1
+FOR /F "usebackq tokens=*" %%A in (%hosts%) DO (
+	SET name=%%~A
+	
+	IF /I "!name:~0,1!" NEQ "#" (
+		FOR /F "tokens=2" %%G IN ("!name!") DO (
+			Echo.%%G | findstr "%filtro%" > nul && (
+			echo %%G
+				SET "servidores[!total!]=%%G"
+				SET /A total += 1
+			)
+		)
 	)
 )
 
